@@ -1,0 +1,48 @@
+import math
+
+def calculate_bounce(n, initial_height=100):
+    """
+    计算第n次反弹的高度、总共经过的距离以及总时间。
+
+    参数:
+    n (int): 反弹次数
+    initial_height (float): 初始高度，默认为100米
+
+    返回:
+    bounce_height (float): 第n次反弹的高度
+    total_distance (float): 总共经过的距离
+    total_time (float): 总时间
+    """
+    g = 9.8  # 重力加速度 (m/s^2)
+    
+    # 第n次反弹的高度
+    bounce_height = initial_height * (0.5 ** n)
+    
+    # 计算总共经过的距离
+    total_distance = initial_height  # 第一次下落的距离
+    for i in range(1, n+1):
+        total_distance += 2 * (initial_height * (0.5 ** i))  # 每次反弹后的上升和下降距离
+    
+    # 计算总时间
+    total_time = math.sqrt(2 * initial_height / g)  # 首次下落时间
+    for i in range(1, n+1):
+        height = initial_height * (0.5 ** i)
+        total_time += 2 * math.sqrt(2 * height / g)  # 每次反弹后的上升和下降时间
+    
+    return bounce_height, total_distance, total_time
+
+def main():
+    # 计算第10次反弹
+    n = 10
+    initial_height = 100
+    
+    # 获取结果
+    bounce_height, total_distance, total_time = calculate_bounce(n, initial_height)
+    
+    # 输出结果
+    print(f"第{n}次反弹的高度: {bounce_height:.2f} 米")
+    print(f"总共经过的距离: {total_distance:.2f} 米")
+    print(f"总时间: {total_time:.2f} 秒")
+
+if __name__ == "__main__":
+    main()
